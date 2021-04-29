@@ -1,12 +1,44 @@
 {
-  "name": "Project2",
+  "name": "shiny-tracker",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "engines": {
+    "node": "14.15.x",
+    "npm": "6.14.x"
+  },
+  "description": "A pokemon shiny hunt tracker",
+  "main": "./server/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Tests Complete\"",
+    "pretest": "eslint ./server --fix",
+    "start": "node ./server/app.js",
+    "nodemon": "nodemon --watch ./server ./server/app.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Ryan Sousis",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.13.13",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "connect-redis": "^4.0.4",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
+    "helmet": "^3.21.3",
+    "mongoose": "^5.9.5",
+    "redis": "^3.0.2",
+    "serve-favicon": "^2.5.0",
+    "underscore": "^1.9.2"
+  }
 }
