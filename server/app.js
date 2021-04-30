@@ -16,32 +16,33 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 const dbURL = 'mongodb+srv://RyanXLVI:RckSer3300!@cluster0.pd1oh.mongodb.net/ShinyTracker';
 
 const mongooseOptions = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 };
 
 mongoose.connect(dbURL, mongooseOptions, (err) => {
-    if(err){
-        console.log('Could not connect to database');
-        throw err;
-    }
+  if (err) {
+    console.log('Could not connect to database');
+    throw err;
+  }
 });
 
 let redisURL = {
-    hostname: 'redis-16562.c244.us-east-1-2.ec2.cloud.redislabs.com',
-    port: 16562,
+  hostname: 'redis-16562.c244.us-east-1-2.ec2.cloud.redislabs.com',
+  port: 16562,
 };
 
 let redisPASS = 'c6HUBnxIuzVypDpgvDbCKd6MffTzQrZU';
-if(process.env.REDISCLOUD_URL){
-    redisURL = url.parse(process.env.REDISCLOUD_URL);
-    [, redisPASS] = redisURL.auth.split(':');
+if (process.env.REDISCLOUD_URL) {
+  redisURL = url.parse(process.env.REDISCLOUD_URL);
+  [, redisPASS] = redisURL.auth.split(':');
 }
 const redisClient = redis.createClient({
-    host: redisURL.hostname,
-    port: redisURL.port,
-    password: redisPASS,
+  host: redisURL.hostname,
+  port: redisURL.port,
+  password: redisPASS,
 });
 
 const router = require('./router.js');
@@ -52,21 +53,21 @@ app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
 app.disable('x-powered-by');
 app.use(compression());
 app.use(bodyParser.urlencoded({
-    extended: true,
+  extended: true,
 }));
 app.use(session({
-    key: 'sessionid',
-    store: new RedisStore({
-        client: redisClient,
-    }),
-    secret: 'ShinyDex complete',
-    resave: true,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-    },
+  key: 'sessionid',
+  store: new RedisStore({
+    client: redisClient,
+  }),
+  secret: 'ShinyDex complete',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+  },
 }));
-app.engine('handlebars', expressHandlebars({defaultLayout: 'main'}));
+app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/../views`);
 app.use(cookieParser());
@@ -74,8 +75,8 @@ app.use(cookieParser());
 router(app);
 
 app.listen(port, (err) => {
-    if(err){
-        throw err;
-    }
-    console.log(`Listening on port ${port}`);
-})
+  if (err) {
+    throw err;
+  }
+  console.log(`Listening on port ${port}`);
+});

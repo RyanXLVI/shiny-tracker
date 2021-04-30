@@ -8,6 +8,11 @@
   "description": "A pokemon shiny hunt tracker",
   "main": "./server/app.js",
   "scripts": {
+    "buildLoginBundle": "babel ./client/login ./client/helper --presets @babel/preset-react --out-file ./hosted/loginBundle.js",
+    "buildAppBundle": "babel ./client/app ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
+    "build": "npm run buildLoginBundle && npm run buildAppBundle",
+    "watchLoginBundle": "babel --watch ./client/login ./client/helper --presets @babel/preset-react --out-file ./hosted/loginBundle.js",
+    "watchAppBundle": "babel --watch ./client/app ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
     "test": "echo \"Tests Complete\"",
     "pretest": "eslint ./server --fix",
     "start": "node ./server/app.js",
@@ -21,9 +26,12 @@
     "@babel/core": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.13.13",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "nodemon": "^2.0.2"
   },
   "dependencies": {
