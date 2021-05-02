@@ -61,7 +61,7 @@ HuntSchema.statics.findByOwner = (ownerId, callback) => {
   return HuntModel.find(search).select('pokemon method encounters generation finished startedDate').lean().exec(callback);
 };
 
-HuntSchema.statics.findAndUpdatePokemon = (ownerId, pokemon, callback) => {
+HuntSchema.statics.updatePokemon = (ownerId, pokemon, callback) => {
   const search = {
     owner: convertID(ownerId),
     pokemon,

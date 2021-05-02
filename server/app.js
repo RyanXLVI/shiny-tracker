@@ -11,7 +11,7 @@ const RedisStore = require('connect-redis')(session);
 const url = require('url');
 const redis = require('redis');
 
-//"build": "npm run buildLoginBundle && npm run buildAppBundle",
+// "build": "npm run buildLoginBundle && npm run buildAppBundle",
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 

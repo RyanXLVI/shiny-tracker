@@ -66,7 +66,7 @@ const finishHunt = (request, response) => {
   const req = request;
   const res = response;
 
-  return Hunt.HuntModel.findAndUpdatePokemon(req.session.account._id, req.body.pokemon, (err, doc) => {
+  return Hunt.HuntModel.updatePokemon(req.session.account._id, req.body.pokemon, (err) => {
     console.log(req.body);
     if (err) {
       console.log(err);
