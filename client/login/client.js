@@ -3,12 +3,12 @@ const handleLogin = (e) => {
 
     $("#pikaMessage").animate({width:'hide'}, 350);
 
-    if($("#user").val() == '' || $("#pass").val() == ''){
+    if($("#user").val() == '' || $("#pass").val == ''){
         handleError("Username or password is empty");
         return false;
     }
 
-    sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serialize, redirect);
+    sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serialize(), redirect);
 
     return false;
 };
@@ -32,7 +32,7 @@ const handleSignup = (e) => {
     return false;
 };
 
-const LoginWindow = () => {
+const LoginWindow = (props) => {
     return (
         <form id="loginForm" name="loginForm"
                 onSubmit={handleLogin}
@@ -61,7 +61,7 @@ const SignupWindow = () => {
             <input id="user" type="text" name="username" placeholder="username"/>
             <label htmlFor="pass">Password: </label>
             <input id="pass" type="password" name="pass" placeholder="password"/>
-            <label htmlFor="pass2">Password: </label>
+            <label htmlFor="pass2">Retype Password: </label>
             <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
             <input className="formSubmit" type="submit" value="Sign Up"/>
         </form>

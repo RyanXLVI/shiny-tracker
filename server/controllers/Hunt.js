@@ -66,40 +66,42 @@ const finishHunt = (request, response) => {
   const req = request;
   const res = response;
 
-  return Hunt.HuntModel.findByPokemon(req.session.account._id, req.body.pokemon, (err, doc) => {
+  return Hunt.HuntModel.findAndUpdatePokemon(req.session.account._id, req.body.pokemon, (err, doc) => {
     console.log(req.body);
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
 
-    console.log(doc);
-    const huntData = {
-      pokemon: doc.pokemon,
-      method: doc.method,
-      encounters: doc.encounters,
-      generation: doc.generation,
-      owner: doc.owner,
-      finished: true,
-    };
-    console.log(huntData);
+    // console.log(doc);
+    // const huntData = {
+    //   pokemon: doc.pokemon,
+    //   method: doc.method,
+    //   encounters: doc.encounters,
+    //   generation: doc.generation,
+    //   owner: doc.owner,
+    //   finished: true,
+    // };
+    // console.log(huntData);
 
-    const updateHunt = new Hunt.HuntModel(huntData);
+    // const updateHunt = new Hunt.HuntModel(huntData);
 
-    const huntPromise = updateHunt.save();
+    // const huntPromise = updateHunt.save();
 
-    huntPromise.then(() => res.json({ redirect: '/tracker' }));
+    // huntPromise.then(() => res.json({ redirect: '/tracker' }));
 
-    huntPromise.catch((errr) => {
-      console.log(errr);
-      if (errr.code === 11000) {
-        return res.status(204).json({ error: 'Hunt Finished!' });
-      }
+    // huntPromise.catch((errr) => {
+    //   console.log(errr);
+    //   if (errr.code === 11000) {
+    //     return res.status(204).json({ error: 'Hunt Finished!' });
+    //   }
 
-      return res.status(400).json({ error: 'An error occured' });
-    });
+    //   return res.status(400).json({ error: 'An error occured' });
+    // });
 
-    return huntPromise;
+    // return huntPromise;
+
+    return res.json({ redirect: '/tracker' });
   });
 };
 

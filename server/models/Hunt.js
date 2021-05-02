@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
+const _ = require('underscore');
 
 let HuntModel = {};
 
 const convertID = mongoose.Types.ObjectId;
+const setName = (name) => _.escape(name).trim();
 
 const HuntSchema = new mongoose.Schema({
   pokemon: {
     type: String,
     required: true,
     trim: true,
+    set: setName,
   },
   method: {
     type: String,
@@ -58,7 +61,7 @@ HuntSchema.statics.findByOwner = (ownerId, callback) => {
   return HuntModel.find(search).select('pokemon method encounters generation finished startedDate').lean().exec(callback);
 };
 
-HuntSchema.statics.findByPokemon = (ownerId, pokemon, callback) => {
+HuntSchema.statics.findAndUpdatePokemon = (ownerId, pokemon, callback) => {
   const search = {
     owner: convertID(ownerId),
     pokemon,
