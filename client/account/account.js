@@ -17,6 +17,15 @@ const handleUpdate = (e) => {
     return false;
 };
 
+const handlePremium = (e) => {
+    e.preventDefault();
+
+    $("#pikaMessage").animate({width:'hide'}, 350);
+
+    sendAjax('POST', "/premium", null, redirect);
+    return false;
+};
+
 const ChangePassWindow = () => {
     return (
         <form id="changePassForm" name="changePassForm"
@@ -34,6 +43,26 @@ const ChangePassWindow = () => {
     );
 };
 
+const GoPremiumWindow = () => {
+    return (
+        <div id="premiumInfo">
+            <h3>Premium gives you a neat feature that you wouldn't have if you are a basic account!</h3>
+            <h3>FEATURE</h3>
+            <ul>
+                <li>Ability to track up to 10 hunts at once (Basic is only 5)</li>
+            </ul>
+            <button onClick={handlePremium}>GO PREMIUM!</button>
+        </div>
+    );
+};
+
+const createPremiumWindow = () => {
+    ReactDOM.render(
+        <GoPremiumWindow  />,
+        document.querySelector("#content")
+    );
+};
+
 const createUpdateWindow = () => {
     ReactDOM.render(
         <ChangePassWindow  />,
@@ -43,10 +72,17 @@ const createUpdateWindow = () => {
 
 const setup = () => {
     const changePassButton = document.querySelector("#changePassButton");
+    const premiumButton = document.querySelector("#premiumButton");
 
     changePassButton.addEventListener("click", (e) => {
         e.preventDefault();
         createUpdateWindow();
+        return false;
+    });
+
+    premiumButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        createPremiumWindow();
         return false;
     });
 };

@@ -18,6 +18,15 @@ const handleUpdate = e => {
   return false;
 };
 
+const handlePremium = e => {
+  e.preventDefault();
+  $("#pikaMessage").animate({
+    width: 'hide'
+  }, 350);
+  sendAjax('POST', "/premium", null, redirect);
+  return false;
+};
+
 const ChangePassWindow = () => {
   return /*#__PURE__*/React.createElement("form", {
     id: "changePassForm",
@@ -47,15 +56,33 @@ const ChangePassWindow = () => {
   }));
 };
 
+const GoPremiumWindow = () => {
+  return /*#__PURE__*/React.createElement("div", {
+    id: "premiumInfo"
+  }, /*#__PURE__*/React.createElement("h3", null, "Premium gives you a neat feature that you wouldn't have if you are a basic account!"), /*#__PURE__*/React.createElement("h3", null, "FEATURE"), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, "Ability to track up to 10 hunts at once (Basic is only 5)")), /*#__PURE__*/React.createElement("button", {
+    onClick: handlePremium
+  }, "GO PREMIUM!"));
+};
+
+const createPremiumWindow = () => {
+  ReactDOM.render( /*#__PURE__*/React.createElement(GoPremiumWindow, null), document.querySelector("#content"));
+};
+
 const createUpdateWindow = () => {
   ReactDOM.render( /*#__PURE__*/React.createElement(ChangePassWindow, null), document.querySelector("#content"));
 };
 
 const setup = () => {
   const changePassButton = document.querySelector("#changePassButton");
+  const premiumButton = document.querySelector("#premiumButton");
   changePassButton.addEventListener("click", e => {
     e.preventDefault();
     createUpdateWindow();
+    return false;
+  });
+  premiumButton.addEventListener("click", e => {
+    e.preventDefault();
+    createPremiumWindow();
     return false;
   });
 };

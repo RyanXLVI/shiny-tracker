@@ -1,6 +1,30 @@
 const models = require('../models');
 
 const { Hunt } = models;
+let hunts = 0;
+let premium = false;
+
+const isPremium = (req, res) => {
+  return models.Account.AccountModel.findUsername(req.session.account._id, (err, doc) => {
+    if(err){
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+    
+    const username = doc[0].username;
+
+    return models.Account.AccountModel.checkPremium(username, (error, doc) => {
+      if(error){
+        console.log(error);
+        return res.status(400).json({ error: 'An error occurred' });
+      }
+
+      premium = doc.premium;
+      //console.log(premium);
+      return doc.premium;
+    });
+  });
+}
 
 const trackerPage = (req, res) => {
   Hunt.HuntModel.findByOwner(req.session.account._id, (err, docs) => {
@@ -17,7 +41,12 @@ const trackHunt = (req, res) => {
   if (!req.body.pokemon || !req.body.method || !req.body.encounters || !req.body.generation) {
     return res.status(400).json({ error: 'Please enter something into all fields for tracking' });
   }
-  console.log(req.body);
+  isPremium(req, res);
+  console.log(premium);
+  console.log(hunts);
+  if((premium && hunts >= 10) || (!premium && hunts >= 5)){
+    return res.status(400).json({ error: 'You have reached your hunts limit' });
+  } 
 
   const huntData = {
     pokemon: req.body.pokemon,
@@ -28,7 +57,7 @@ const trackHunt = (req, res) => {
     finished: false,
   };
 
-  console.log(huntData);
+  //console.log(huntData);
 
   const newHunt = new Hunt.HuntModel(huntData);
 
@@ -58,6 +87,7 @@ const getHunts = (request, response) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
+    hunts = docs.length;
     return res.json({ hunts: docs });
   });
 };
@@ -81,3 +111,4 @@ module.exports.trackerPage = trackerPage;
 module.exports.track = trackHunt;
 module.exports.getHunts = getHunts;
 module.exports.finish = finishHunt;
+module.exports.isPremium = isPremium;

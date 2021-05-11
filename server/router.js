@@ -12,6 +12,7 @@ const router = (app) => {
   app.post('/finish', mid.requiresLogin, controllers.Hunt.finish);
   app.get('/account', mid.requiresLogin, controllers.Account.account);
   app.post('/account', mid.requiresLogin, controllers.Account.changePassword);
+  app.post('/premium', mid.requiresLogin, controllers.Account.goPremium);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
 
