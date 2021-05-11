@@ -1,6 +1,5 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
-const { Account } = require('.');
 
 let AccountModel = {};
 const iterations = 10000;
@@ -87,19 +86,19 @@ AccountSchema.statics.authenticate = (username, password, callback) => {
 
 AccountSchema.statics.findUsername = (id, callback) => {
   const search = {
-    _id: convertID(id), 
-  }
+    _id: convertID(id),
+  };
 
   return AccountModel.find(search).select('username').lean().exec(callback);
-}
+};
 
 AccountSchema.statics.updatePassword = (username, data, callback) => {
   const search = {
-    username: username,
+    username,
   };
 
   return AccountModel.findOneAndUpdate(search, data, callback);
-}
+};
 
 AccountModel = mongoose.model('Account', AccountSchema);
 

@@ -8,7 +8,7 @@ const loginPage = (req, res) => {
 
 const accountPage = (req, res) => {
   res.render('account');
-}
+};
 
 const logout = (req, res) => {
   req.session.destroy();
@@ -94,7 +94,7 @@ const changePassword = (request, response) => {
     return res.status(400).json({ error: 'Your passwords do not match!' });
   }
 
-  Account.AccountModel.findUsername(req.session.account._id, (err, doc) => {
+  return Account.AccountModel.findUsername(req.session.account._id, (err, doc) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
@@ -103,14 +103,14 @@ const changePassword = (request, response) => {
 
     return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
       const accountData = {
-        username: username,
+        username,
         salt,
         password: hash,
       };
 
-      Account.AccountModel.updatePassword(username, accountData, (err) => {
-        if(err){ 
-          console.log(err);
+      Account.AccountModel.updatePassword(username, accountData, (errr) => {
+        if (errr) {
+          console.log(errr);
           return res.status(400).json({ error: 'An error occurred' });
         }
 
