@@ -51,7 +51,7 @@ const GoPremiumWindow = () => {
             <ul>
                 <li>Ability to track up to 10 hunts at once (Basic is only 5)</li>
             </ul>
-            <button onClick={handlePremium}>GO PREMIUM!</button>
+            <button onClick={handlePremium} id="premiumButton">GO PREMIUM!</button>
         </div>
     );
 };
