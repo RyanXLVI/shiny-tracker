@@ -120,24 +120,23 @@ const changePassword = (request, response) => {
   });
 };
 
-const goPremium = (req, res) => {
-  return Account.AccountModel.findUsername(req.session.account._id, (err, doc) => {
+const goPremium = (req, res) => Account.AccountModel.findUsername(req.session.account._id,
+  (err, doc) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    const username = doc[0].username;
+    const { username } = doc[0];
 
-    return Account.AccountModel.updatePremium(username, (err) => {
-      if(err){
-        console.log(err);
+    return Account.AccountModel.updatePremium(username, (errr) => {
+      if (errr) {
+        console.log(errr);
         return res.status(400).json({ error: 'An error occurred' });
       }
 
       return res.json({ redirect: '/tracker' });
     });
   });
-}
 
 module.exports.loginPage = loginPage;
 module.exports.login = login;

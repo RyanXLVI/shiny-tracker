@@ -98,23 +98,23 @@ AccountSchema.statics.updatePassword = (username, data, callback) => {
   };
 
   return AccountModel.findOneAndUpdate(search, data, callback);
-};  
+};
 
 AccountSchema.statics.updatePremium = (username, callback) => {
   const search = {
     username,
   };
 
-  return AccountModel.findOneAndUpdate(search, {premium: true}, callback);
-}
+  return AccountModel.findOneAndUpdate(search, { premium: true }, callback);
+};
 
 AccountSchema.statics.checkPremium = (username, callback) => {
   const search = {
     username,
-  }
+  };
 
   return AccountModel.findOne(search, callback).select('premium').lean().exec(callback);
-}
+};
 
 AccountModel = mongoose.model('Account', AccountSchema);
 
