@@ -73,34 +73,6 @@ const finishHunt = (request, response) => {
       return res.status(400).json({ error: 'An error occurred' });
     }
 
-    // console.log(doc);
-    // const huntData = {
-    //   pokemon: doc.pokemon,
-    //   method: doc.method,
-    //   encounters: doc.encounters,
-    //   generation: doc.generation,
-    //   owner: doc.owner,
-    //   finished: true,
-    // };
-    // console.log(huntData);
-
-    // const updateHunt = new Hunt.HuntModel(huntData);
-
-    // const huntPromise = updateHunt.save();
-
-    // huntPromise.then(() => res.json({ redirect: '/tracker' }));
-
-    // huntPromise.catch((errr) => {
-    //   console.log(errr);
-    //   if (errr.code === 11000) {
-    //     return res.status(204).json({ error: 'Hunt Finished!' });
-    //   }
-
-    //   return res.status(400).json({ error: 'An error occured' });
-    // });
-
-    // return huntPromise;
-
     return res.json({ redirect: '/tracker' });
   });
 };

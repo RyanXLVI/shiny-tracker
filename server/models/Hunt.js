@@ -65,6 +65,7 @@ HuntSchema.statics.updatePokemon = (ownerId, pokemon, callback) => {
   const search = {
     owner: convertID(ownerId),
     pokemon,
+    finished: false,
   };
 
   return HuntModel.findOneAndUpdate(search, { finished: true }, callback).select('pokemon method encounters generation finished owner startedDate').lean();

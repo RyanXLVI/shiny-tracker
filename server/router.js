@@ -10,6 +10,8 @@ const router = (app) => {
   app.get('/tracker', mid.requiresLogin, controllers.Hunt.trackerPage);
   app.post('/tracker', mid.requiresLogin, controllers.Hunt.track);
   app.post('/finish', mid.requiresLogin, controllers.Hunt.finish);
+  app.get('/account', mid.requiresLogin, controllers.Account.account);
+  app.post('/account', mid.requiresLogin, controllers.Account.changePassword);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
 

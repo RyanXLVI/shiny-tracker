@@ -1,10 +1,13 @@
 const crypto = require('crypto');
 const mongoose = require('mongoose');
+const { Account } = require('.');
 
 let AccountModel = {};
 const iterations = 10000;
 const saltLength = 64;
 const keyLength = 64;
+
+const convertID = mongoose.Types.ObjectId;
 
 const AccountSchema = new mongoose.Schema({
   username: {
@@ -81,6 +84,22 @@ AccountSchema.statics.authenticate = (username, password, callback) => {
     });
   });
 };
+
+AccountSchema.statics.findUsername = (id, callback) => {
+  const search = {
+    _id: convertID(id), 
+  }
+
+  return AccountModel.find(search).select('username').lean().exec(callback);
+}
+
+AccountSchema.statics.updatePassword = (username, data, callback) => {
+  const search = {
+    username: username,
+  };
+
+  return AccountModel.findOneAndUpdate(search, data, callback);
+}
 
 AccountModel = mongoose.model('Account', AccountSchema);
 

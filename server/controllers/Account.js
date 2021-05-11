@@ -6,6 +6,10 @@ const loginPage = (req, res) => {
   res.render('login');
 };
 
+const accountPage = (req, res) => {
+  res.render('account');
+}
+
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
@@ -74,7 +78,51 @@ const signup = (request, response) => {
   });
 };
 
+const changePassword = (request, response) => {
+  const req = request;
+  const res = response;
+  let username = '';
+
+  req.body.pass = `${req.body.pass}`;
+  req.body.pass2 = `${req.body.pass2}`;
+
+  if (!req.body.pass || !req.body.pass2) {
+    return res.status(400).json({ error: 'You need to enter all fields to change password!' });
+  }
+
+  if (req.body.pass !== req.body.pass2) {
+    return res.status(400).json({ error: 'Your passwords do not match!' });
+  }
+
+  Account.AccountModel.findUsername(req.session.account._id, (err, doc) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+    username = doc[0].username;
+
+    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+      const accountData = {
+        username: username,
+        salt,
+        password: hash,
+      };
+
+      Account.AccountModel.updatePassword(username, accountData, (err) => {
+        if(err){ 
+          console.log(err);
+          return res.status(400).json({ error: 'An error occurred' });
+        }
+
+        return res.json({ redirect: '/account' });
+      });
+    });
+  });
+};
+
 module.exports.loginPage = loginPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
+module.exports.account = accountPage;
+module.exports.changePassword = changePassword;
