@@ -120,7 +120,8 @@ const changePassword = (request, response) => {
   });
 };
 
-const goPremium = (req, res) => Account.AccountModel.findUsername(req.session.account._id,
+const goPremium = (req, res) => 
+      Account.AccountModel.findUsername(req.session.account._id,
   (err, doc) => {
     if (err) {
       console.log(err);

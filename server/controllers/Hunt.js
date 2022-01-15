@@ -4,7 +4,8 @@ const { Hunt } = models;
 let hunts = 0;
 let premium = false;
 
-const isPremium = (req, res) => models.Account.AccountModel.findUsername(req.session.account._id,
+const isPremium = (req, res) => 
+    models.Account.AccountModel.findUsername(req.session.account._id,
   (err, doc) => {
     if (err) {
       console.log(err);
